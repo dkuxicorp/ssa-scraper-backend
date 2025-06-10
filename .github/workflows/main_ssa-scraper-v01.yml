@@ -29,13 +29,14 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-
       - name: Install dependencies
         run: pip install -r requirements.txt
+      
+      - name: 'Install Playwright Browsers'
+        run: playwright install chromium
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
 
       # Optional: Add step to run tests here
 
