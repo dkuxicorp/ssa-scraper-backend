@@ -7,7 +7,6 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.' 
   PYTHON_VERSION: '3.10'
 
 jobs:
@@ -29,6 +28,9 @@ jobs:
       - name: 'Install Playwright Browsers'
         run: python -m playwright install chromium
 
+      - name: 'Archive function app for deployment'
+        run: zip -r release.zip .
+      
       - name: 'Login to Azure'
         uses: azure/login@v2
         with:
@@ -40,4 +42,4 @@ jobs:
         uses: Azure/functions-action@v1
         with:
           app-name: 'ssa-scraper-v01'
-          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          package: release.zip
