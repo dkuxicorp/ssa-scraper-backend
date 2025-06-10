@@ -33,11 +33,14 @@ jobs:
       - name: 'Install Playwright Browsers'
         run: playwright install chromium
 
+      - name: 'Zip artifact for deployment'
+        run: zip release.zip . -r
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: . # Upload the entire project directory
+          path: release.zip # Upload the zip file instead of the folder
 
   deploy:
     runs-on: ubuntu-latest
@@ -62,4 +65,4 @@ jobs:
         id: deploy-to-function
         with:
           app-name: 'ssa-scraper-v01'
-          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          package: 'release.zip' # Deploy the zip package directly
