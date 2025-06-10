@@ -29,14 +29,13 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
+      - name: Create and start virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+
       - name: Install dependencies
         run: pip install -r requirements.txt
-      
-      - name: 'Install Playwright Browsers'
-        run: playwright install chromium
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v4
 
       # Optional: Add step to run tests here
 
@@ -70,9 +69,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C0CA456A192C4798A49BD9B0F0923A76 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_336A61E5E11745ECA98178A46B6EA783 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8107ACF538ED43A591167A1FABDB7E68 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4A65F7DB8D4B4D0E867AEB1743F46715 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B4E64F9C7CAC41608ACFA03487674619 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E20A468048BB4006AE337BC3C08895BB }}
 
       - name: 'Deploy to Azure Functions'
         uses: Azure/functions-action@v1
